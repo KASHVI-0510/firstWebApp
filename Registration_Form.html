@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>College Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+    }
+
+    form {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px;
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 500px) {
+      form {
+        padding: 15px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <form id="regForm" onsubmit="return validateForm()">
+    <h2>College Registration Form</h2>
+
+    <label>First Name:</label>
+    <input type="text" id="firstName" />
+    <span class="error" id="firstNameError"></span>
+
+    <label>Last Name:</label>
+    <input type="text" id="lastName" />
+    <span class="error" id="lastNameError"></span>
+
+    <label>Address:</label>
+    <textarea id="address" rows="3"></textarea>
+    <span class="error" id="addressError"></span>
+
+    <label>Password:</label>
+    <input type="password" id="password" />
+    <span class="error" id="passwordError"></span>
+
+    <label>Email ID:</label>
+    <input type="text" id="email" />
+    <span class="error" id="emailError"></span>
+
+    <label>Mobile Number:</label>
+    <input type="text" id="mobile" />
+    <span class="error" id="mobileError"></span>
+
+    <label>Stream:</label>
+    <select id="stream" onchange="populateSubjects()">
+      <option value="">--Select Stream--</option>
+      <option value="Science">Science</option>
+      <option value="Commerce">Commerce</option>
+      <option value="Arts">Arts</option>
+    </select>
+    <span class="error" id="streamError"></span>
+
+    <label>Subjects:</label>
+    <select id="subjects" multiple>
+      <!-- Subjects will be populated dynamically -->
+    </select>
+
+    <button type="submit">Register</button>
+  </form>
+
+  <script>
+    function validateForm() {
+      let valid = true;
+
+      // First Name
+      let fname = document.getElementById("firstName").value.trim();
+      if (!/^[A-Za-z]{6,}$/.test(fname)) {
+        document.getElementById("firstNameError").innerText = "First name must have only alphabets and at least 6 characters.";
+        valid = false;
+      } else {
+        document.getElementById("firstNameError").innerText = "";
+      }
+
+      // Last Name
+      let lname = document.getElementById("lastName").value.trim();
+      if (lname === "") {
+        document.getElementById("lastNameError").innerText = "Last name cannot be empty.";
+        valid = false;
+      } else {
+        document.getElementById("lastNameError").innerText = "";
+      }
+
+      // Address
+      let address = document.getElementById("address").value.trim();
+      if (address === "") {
+        document.getElementById("addressError").innerText = "Address cannot be empty.";
+        valid = false;
+      } else {
+        document.getElementById("addressError").innerText = "";
+      }
+
+      // Password
+      let password = document.getElementById("password").value.trim();
+      if (password.length < 6) {
+        document.getElementById("passwordError").innerText = "Password must be at least 6 characters.";
+        valid = false;
+      } else {
+        document.getElementById("passwordError").innerText = "";
+      }
+
+      // Email
+      let email = document.getElementById("email").value.trim();
+      let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").innerText = "Enter a valid email (e.g., name@domain.com).";
+        valid = false;
+      } else {
+        document.getElementById("emailError").innerText = "";
+      }
+
+      // Mobile
+      let mobile = document.getElementById("mobile").value.trim();
+      if (!/^\d{10}$/.test(mobile)) {
+        document.getElementById("mobileError").innerText = "Mobile number must be exactly 10 digits.";
+        valid = false;
+      } else {
+        document.getElementById("mobileError").innerText = "";
+      }
+
+      // Stream
+      let stream = document.getElementById("stream").value;
+      if (stream === "") {
+        document.getElementById("streamError").innerText = "Please select a stream.";
+        valid = false;
+      } else {
+        document.getElementById("streamError").innerText = "";
+      }
+
+      return valid;
+    }
+
+    function populateSubjects() {
+      let stream = document.getElementById("stream").value;
+      let subjectSelect = document.getElementById("subjects");
+      subjectSelect.innerHTML = "";
+
+      let subjects = [];
+      if (stream === "Science") {
+        subjects = ["Physics", "Chemistry", "Biology", "Mathematics"];
+      } else if (stream === "Commerce") {
+        subjects = ["Accounting", "Economics", "Business Studies", "Statistics"];
+      } else if (stream === "Arts") {
+        subjects = ["History", "Political Science", "Sociology", "Psychology"];
+      }
+
+      subjects.forEach(sub => {
+        let option = document.createElement("option");
+        option.value = sub;
+        option.text = sub;
+        subjectSelect.appendChild(option);
+      });
+    }
+  </script>
+
+</body>
+</html>
