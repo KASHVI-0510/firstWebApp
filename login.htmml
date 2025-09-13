@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    a {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <form onsubmit="return validateLogin()">
+      <input type="text" id="username" placeholder="Enter Username" />
+      <span class="error" id="usernameError"></span>
+
+      <input type="password" id="password" placeholder="Enter Password" />
+      <span class="error" id="passwordError"></span>
+
+      <button type="submit">Login</button>
+      <a href="#">Forgot Password?</a>
+    </form>
+  </div>
+
+  <script>
+    function validateLogin() {
+      let valid = true;
+
+      let username = document.getElementById("username").value.trim();
+      let password = document.getElementById("password").value.trim();
+
+      if (username === "") {
+        document.getElementById("usernameError").innerText = "Username cannot be empty.";
+        valid = false;
+      } else {
+        document.getElementById("usernameError").innerText = "";
+      }
+
+      if (password === "") {
+        document.getElementById("passwordError").innerText = "Password cannot be empty.";
+        valid = false;
+      } else {
+        document.getElementById("passwordError").innerText = "";
+      }
+
+      if (valid) {
+        alert("Login successful!");
+      }
+
+      return valid;
+    }
+  </script>
+
+</body>
+</html>
